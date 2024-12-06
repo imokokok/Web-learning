@@ -1,60 +1,37 @@
 'use strict';
 
-//初始化游戏
-const number = Math.trunc(Math.random() * 20) + 1;
-let score = 10;
-let highscore = 0;
+const modal = document.querySelector('.modal');
+const overlay = document.querySelector('.overlay');
+const btnOpen = document.querySelectorAll('.show-modal');
+const btnClose = document.querySelector('.close-modal');
+console.log(btnOpen);
 
-const dispalyMessage = function (message) {
-  document.querySelector('.message').textContent = message;
+//打开模块
+const openModal = function () {
+  console.log('I click');
+  modal.classList.remove('hidden');
+  overlay.classList.remove('hidden');
 };
 
-document.querySelector('.check').addEventListener('click', function () {
-  const guess = Number(document.querySelector('.guess').value);
-  console.log(guess, typeof guess);
+//关闭模块
+const closeModal = function () {
+  modal.classList.add('hidden');
+  overlay.classList.add('hidden');
+};
 
-  if (!guess) {
-    //输入错误数字
-    dispalyMessage('❌Please enter the correct number!');
+for (let i = 0; i < btnOpen.length; i++)
+  btnOpen[i].addEventListener('click', openModal);
 
-    //回答正确
-  } else if (guess === number) {
-    dispalyMessage('You are right');
+btnClose.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal);
 
-    document.querySelector('body').style.backgroundColor = 'blue';
-    document.querySelector('.number').textContent = number;
+//使用按键退出模块
+document.addEventListener('keydown', function (e) {
+  console.log(e.key);
 
-    //获得最高分
-    if (score > highscore) {
-      highscore = score;
-      document.querySelector('.highscore').textContent = highscore;
-    }
-
-    //回答错误
-  } else if (guess !== number) {
-    if (score > 1) {
-      dispalyMessage(guess > number ? '👇Guess smaller' : '👆Guess higher');
-      score--;
-      document.querySelector('.score').textContent = score;
-    } else {
-      dispalyMessage('Faliure!');
-      document.querySelector('body').style.backgroundColor = 'red';
-      document.querySelector('.score').textContent = 0;
+  if (e.key === 'Escape') {
+    if (!modal.classList.contains('hidden')) {
+      closeModal();
     }
   }
-});
-
-//重新开始游戏
-document.querySelector('.again').addEventListener('click', function () {
-  //初始化游戏
-  const number = Math.trunc(Math.random() * 20) + 1;
-  let score = 10;
-
-  document.querySelector('body').style.backgroundColor = '#222';
-  document.querySelector('.number').style.width = '15rem';
-
-  document.querySelector('.number').textContent = '?';
-  document.querySelector('.score').textContent = score;
-  document.querySelector('.guess').value = '';
-  dispalyMessage('Start game');
 });
