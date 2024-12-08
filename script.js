@@ -1,6 +1,6 @@
 'use strict';
 
-熟悉dom操作
+//熟悉dom操作
 
 //初始化游戏
 const number = Math.trunc(Math.random() * 20) + 1;
