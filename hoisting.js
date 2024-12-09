@@ -1,14 +1,14 @@
 'use strict';
 
-// Hoisting的学习
+// Hoisting的学习和深入了解
 
 // Variables
 console.log(me);
 // console.log(job);
 // console.log(year);
 
-var me = 'Jonas';
-let job = 'teacher';
+var me = 'Imokokok';
+let job = 'student';
 const year = 1991;
 
 // Functions
@@ -44,3 +44,8 @@ const z = 3;
 console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.z);
+
+//1.hoisting仅适用于var和函数声明的作用域内，let const不会被提升
+//2.尽量少使用var定义
+//3.箭头函数是表达式，而不是声明，不会被提升到作用域顶部
+//需要注意的是var关键字的使用会定义一个全局窗口变量
