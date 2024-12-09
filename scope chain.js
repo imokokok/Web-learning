@@ -1,8 +1,7 @@
 'use strict';
 
-//学习scope chain
+//学习scope chain并深入理解
 
-/*
 function calcAge(birthYear) {
   const age = 2037 - birthYear;
 
@@ -42,3 +41,4 @@ calcAge(1991);
 
 //1.scope chain是函数定义时确定的而不是函数调用时
 //2.嵌套函数的调用基于嵌套关系形成的scope chain
+//多思考scope chain在代码运行是的逻辑，拓展探讨更多衍生机制
