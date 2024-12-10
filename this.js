@@ -16,21 +16,23 @@ const calcAgeArrow = birthYear => {
 };
 calcAgeArrow(1980);
 
-const jonas = {
+const imokok = {
   year: 1991,
   calcAge: function () {
     console.log(this);
     console.log(2037 - this.year);
   },
 };
-jonas.calcAge();
+imokok.calcAge();
 
 const matilda = {
   year: 2017,
 };
 
-matilda.calcAge = jonas.calcAge;
+matilda.calcAge = imokok.calcAge;
 matilda.calcAge();
 
-const f = jonas.calcAge;
+const f = imokok.calcAge;
 f();
+
+//全局环境中的this指针指向全局对象，注意嵌套函数和箭头函数的this绑定
