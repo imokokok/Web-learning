@@ -45,3 +45,7 @@ var addArrow = (a, b) => {
   return a + b;
 };
 addArrow(2, 5, 8);
+//1.箭头函数是表达式
+//2.箭头函数不能作为方法
+//3.箭头函数没有arguments对象
+//4.箭头函数不能绑定自己的this
