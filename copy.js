@@ -1,6 +1,6 @@
 'use strict';
 
-//深拷贝和浅拷贝
+//深拷贝和浅拷贝的深入理解
 
 let age = 30;
 let oldAge = age;
@@ -56,4 +56,4 @@ jessicaCopy.family.push('John');
 console.log('Before marriage:', jessica2);
 console.log('After marriage: ', jessicaCopy);
 */
-
+//深入了解堆栈内存的相关知识，思考深浅拷贝的底层逻辑
