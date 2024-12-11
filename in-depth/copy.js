@@ -57,3 +57,4 @@ console.log('Before marriage:', jessica2);
 console.log('After marriage: ', jessicaCopy);
 */
 //深入了解堆栈内存的相关知识，思考深浅拷贝的底层逻辑
+//可以用Object.assign和...扩展运算符实现浅拷贝
