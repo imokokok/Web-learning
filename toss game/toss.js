@@ -1,5 +1,8 @@
 'use strict';
 
+//这是一个掷色子的游戏
+//在toss.png中你可以了解到游戏的流程和规则
+
 // 选择元素
 const player0El = document.querySelector('.player--0');
 const player1El = document.querySelector('.player--1');
