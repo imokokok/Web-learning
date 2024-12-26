@@ -26,3 +26,30 @@ Child.prototype.sayAge = function() {
 const child = new Child('Imok', 20);
 child.sayName(); // Name: Imok
 child.sayAge(); // Age: 20
+
+//在类中继承
+class Parent {
+  constructor(name) {
+    this.name = name;
+    this.colors = ['red', 'blue', 'green'];
+  }
+
+  sayName() {
+    console.log('Name:', this.name);
+  }
+}
+
+class Child extends Parent {
+  constructor(name, age) {
+    super(name); // 调用父类的构造函数
+    this.age = age;
+  }
+
+  sayAge() {
+    console.log('Age:', this.age);
+  }
+}
+
+const child = new Child('Imok', 20);
+child.sayName(); // Name: Imok
+child.sayAge(); // Age: 20
