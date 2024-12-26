@@ -1,31 +1,28 @@
 'use strict';
 //在JavaScript中，类的继承可以通过多种方法实现，包括类与构造函数之间的继承，以及两个构造函数之间的继承
 
-// 构造函数
-function Person(name) {
+//在构造函数中继承
+function Parent(name) {
   this.name = name;
+  this.colors = ['red', 'blue', 'green'];
 }
 
-Person.prototype.sayHello = function () {
-  console.log(`Hello, my name is ${this.name}.`);
+Parent.prototype.sayName = function() {
+  console.log('Name:', this.name);
 };
 
-// 类
-class Employee {
-  constructor(name, jobTitle) {
-    Person.call(this, name); // 调用构造函数来初始化属性
-    this.jobTitle = jobTitle;
-  }
-
-  sayHello() {
-    console.log(`Hello, my name is ${this.name} and I am a ${this.jobTitle}.`);
-  }
+function Child(name, age) {
+  Parent.call(this, name); // 调用父类的构造函数
+  this.age = age;
 }
 
-// 设置原型链继承
-Employee.prototype = Object.create(Person.prototype);
-Employee.prototype.constructor = Employee; // 修复constructor属性
+Child.prototype = Object.create(Parent.prototype); // 设置原型链
+Child.prototype.constructor = Child; // 修复构造函数指向
 
-// 创建实例
-const employee = new Employee('Imok', 'Developer');
-employee.sayHello(); // 输出：Hello, my name is Imok and I am a Developer.
+Child.prototype.sayAge = function() {
+  console.log('Age:', this.age);
+};
+
+const child = new Child('Imok', 20);
+child.sayName(); // Name: Imok
+child.sayAge(); // Age: 20
