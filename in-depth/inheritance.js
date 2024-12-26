@@ -1,4 +1,6 @@
 'use strict';
+//在JavaScript中，类的继承可以通过多种方法实现，包括类与构造函数之间的继承，以及两个构造函数之间的继承
+
 // 构造函数
 function Person(name) {
   this.name = name;
