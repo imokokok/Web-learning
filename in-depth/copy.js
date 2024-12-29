@@ -21,13 +21,13 @@ console.log('Me', me);
 ///////////////////////////////////////
 // Primitives vs. Objects in Practice
 
-// Primitive types
+// 初始类型
 let lastName = 'Williams';
 let oldLastName = lastName;
 lastName = 'Davis';
 console.log(lastName, oldLastName);
 
-// Reference types
+// 参考类型
 const jessica = {
   firstName: 'Jessica',
   lastName: 'Williams',
@@ -39,7 +39,7 @@ console.log('Before marriage:', jessica);
 console.log('After marriage: ', marriedJessica);
 // marriedJessica = {};
 
-// Copying objects
+// 拷贝对象
 const jessica2 = {
   firstName: 'Jessica',
   lastName: 'Williams',
