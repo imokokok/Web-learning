@@ -1,6 +1,6 @@
 'use strict';
 
-//深拷贝和浅拷贝的深入理解
+//浅拷贝的实现以及理解
 
 let age = 30;
 let oldAge = age;
@@ -16,10 +16,6 @@ const friend = me;
 friend.age = 27;
 console.log('Friend:', friend);
 console.log('Me', me);
-
-
-///////////////////////////////////////
-// Primitives vs. Objects in Practice
 
 // 初始类型
 let lastName = 'Williams';
