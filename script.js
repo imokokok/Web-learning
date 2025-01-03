@@ -64,3 +64,21 @@ const getCountryAndNeighbor = function (country) {
 getCountryAndNeighbor('usa');
 getCountryAndNeighbor('china');
 getCountryAndNeighbor('germany');
+
+const getCountryDate = function (country) {
+  fetch('https://restcountries.com/v3.1/name/${country}')
+    .then(response => response.json())
+    .then(data => rendercountry(data[0]));
+  const neighbor = data[0].borders[0];
+
+  if (!neighbor) return;
+
+  //国家2
+  return fetch('https://restcountries.com/v3.1/alpha/${neighbor}');
+
+  fetch('https://restcountries.com/v3.1/alpha/${neighbor}')
+    .then(response => json())
+    .then(data => rendercountry(data, 'neighbor'));
+};
+
+getCountryDate('usa');
