@@ -3,6 +3,10 @@
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentElement('beforeend', msg);
+  countriesContainer.style.opacity = 1;
+};
 // NEW COUNTRIES API URL (use instead of the URL shown in videos):
 // https://restcountries.com/v2/name/portugal
 
@@ -61,13 +65,13 @@ const getCountryAndNeighbor = function (country) {
   });
 };
 
-getCountryAndNeighbor('usa');
-getCountryAndNeighbor('china');
-getCountryAndNeighbor('germany');
-
 const getCountryDate = function (country) {
+  //国家1
   fetch('https://restcountries.com/v3.1/name/${country}')
-    .then(response => response.json())
+    .then(response => {
+      console.log(response);
+      return response.json();
+    })
     .then(data => rendercountry(data[0]));
   const neighbor = data[0].borders[0];
 
@@ -78,7 +82,16 @@ const getCountryDate = function (country) {
 
   fetch('https://restcountries.com/v3.1/alpha/${neighbor}')
     .then(response => json())
-    .then(data => rendercountry(data, 'neighbor'));
+    .then(data => rendercountry(data, 'neighbor'))
+    .catch(err => {
+      console.error(`${err}❌`);
+      renderError('Something went wrong');
+    })
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    });
 };
 
-getCountryDate('usa');
+btn.addEventListener('click', function () {
+  getCountryDate('usa');
+});
