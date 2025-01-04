@@ -215,3 +215,70 @@ async function getUserData(userId) {
 
 //异步函数默认返回 Promise
 //如果在异步函数中返回一个 Promise，JavaScript 会直接使用这个 Promise，而不会再次包装它
+
+//promises并行
+
+//promis.all
+const fetchData1 = fetch('https://api.example.com/data1').then(response =>
+  response.json()
+);
+const fetchData2 = fetch('https://api.example.com/data2').then(response =>
+  response.json()
+);
+const fetchData3 = fetch('https://api.example.com/data3').then(response =>
+  response.json()
+);
+
+Promise.all([fetchData1, fetchData2, fetchData3])
+  .then(results => {
+    console.log('所有数据:', results); // 结果是一个数组，顺序与传入的 Promise 数组一致
+  })
+  .catch(error => {
+    console.error('出错:', error); // 任何一个 Promise 失败，都会进入 catch
+  });
+
+//返回所有 Promise 的结果数组。
+//立即拒绝，返回第一个失败的原因
+
+//promise.allSettled
+const fetchData4 = fetch('https://api.example.com/data1').then(response =>
+  response.json()
+);
+const fetchData5 = fetch('https://api.example.com/data2').then(response =>
+  response.json()
+);
+const fetchData6 = fetch('https://api.example.com/data3').then(response =>
+  response.json()
+);
+
+Promise.allSettled([fetchData1, fetchData2, fetchData3]).then(results => {
+  results.forEach((result, index) => {
+    if (result.status === 'fulfilled') {
+      console.log(`请求 ${index + 1} 成功:`, result.value);
+    } else {
+      console.error(`请求 ${index + 1} 失败:`, result.reason);
+    }
+  });
+});
+
+//无论成功或失败，都会等待所有 Promise 完成。
+//每个 Promise 的结果是一个对象，包含 status（fulfilled 或 rejected）和 value 或 reason
+
+//promise.race
+const fetchData7 = fetch('https://api.example.com/data1').then(response =>
+  response.json()
+);
+const fetchData8 = fetch('https://api.example.com/data2').then(response =>
+  response.json()
+);
+
+Promise.race([fetchData1, fetchData2])
+  .then(result => {
+    console.log('第一个完成的结果:', result);
+  })
+  .catch(error => {
+    console.error('第一个完成的错误:', error);
+  });
+
+//返回第一个完成的 Promise 的结果（无论成功或失败）。
+//需要快速获取第一个完成的 Promise 结果的场景（例如超时机制）
