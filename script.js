@@ -2,6 +2,7 @@
 
 //异步编程的学习
 
+//使用restcountry API进行学习和展示
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -165,7 +166,8 @@ wait(1)
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
 
-//async await try catch的学习和使用
+///////////////////////////////////////////
+//异步函数的进阶
 // 模拟一个用户数据库
 const users = [
   { id: 1, name: 'Im', age: 25 },
@@ -210,3 +212,6 @@ async function getUserData(userId) {
     console.error('主函数捕获到错误:', error.message);
   }
 })();
+
+//异步函数默认返回 Promise
+//如果在异步函数中返回一个 Promise，JavaScript 会直接使用这个 Promise，而不会再次包装它
