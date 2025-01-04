@@ -1,5 +1,7 @@
 'use strict';
 
+//异步编程的学习
+
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -163,7 +165,7 @@ wait(1)
 Promise.resolve('abc').then(x => console.log(x));
 Promise.reject(new Error('Problem!')).catch(x => console.error(x));
 
-//异步编程的学习
+//async await try catch的学习和使用
 // 模拟一个用户数据库
 const users = [
   { id: 1, name: 'Im', age: 25 },
