@@ -70,6 +70,9 @@ const getCountryDate = function (country) {
   fetch('https://restcountries.com/v3.1/name/${country}')
     .then(response => {
       console.log(response);
+
+      if (response.ok) throw new Error(`Country not found ${response.status}`);
+
       return response.json();
     })
     .then(data => rendercountry(data[0]));
