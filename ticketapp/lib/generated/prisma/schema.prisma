@@ -1,0 +1,55 @@
+// This isyourPrismaschemafile,
+//learnmoreaboutitinthedocs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Ticket {
+  id               Int      @id @default(autoincrement())
+  title            String   @db.VarChar(255)
+  description      String   @db.Text
+  status           Status   @default(OPEN)
+  priority         Priority @default(MEDIUM)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  assignedToUserId Int?
+  assignedToUser   User?    @relation(fields: [assignedToUserId], references: [id])
+}
+
+enum Status {
+  OPEN
+  STARTED
+  CLOSED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  name           String
+  username       String   @unique
+  password       String
+  role           Role     @default(USER)
+  assignedTicket Ticket[]
+}
+
+enum Role {
+  ADMIN
+  TECH
+  USER
+}
