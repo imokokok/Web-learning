@@ -1,25 +1,30 @@
-import UserForm from "@/components/UserForm";
 import React from "react";
-import DataTableSimple from "./data-table-simple";
 import prisma from "@/prisma/db";
+import UserForm from "@/components/UserForm";
 import { getServerSession } from "next-auth";
-import options from "../api/auth/[...nextauth]/options";
+import options from "@/app/api/auth/[...nextauth]/options";
 
-const Users = async () => {
+interface Props {
+  params: { id: string };
+}
+
+const EditUser = async ({ params }: Props) => {
   const session = await getServerSession(options);
 
   if (session?.user.role !== "ADMIN") {
     return <p className="text-destructive">Admin access required</p>;
   }
 
-  const users = await prisma.user.findMany();
+  const user = await prisma?.user.findUnique({
+    where: { id: parseInt(params.id) },
+  });
 
-  return (
-    <div>
-      <UserForm />
-      <DataTableSimple users={users} />
-    </div>
-  );
+  if (!user) {
+    return <p className="text-destructive">User Not Found</p>;
+  }
+
+  user.password = "";
+  return <UserForm user={user} />;
 };
 
-export default Users;
+export default EditUser;
