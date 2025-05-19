@@ -1,21 +1,13 @@
 import { userSchema } from "@/ValidationSchemas/users";
-import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import bcrypt from "bcryptjs";
-import { getServerSession } from "next-auth";
-import options from "../auth/[...nextauth]/options";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
-  const session = await getServerSession(options);
+interface Props {
+  params: { id: string };
+}
 
-  if (!session) {
-    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
-  }
-
-  if (session.user.role !== "ADMIN") {
-    return NextResponse.json({ error: "Not Admin." }, { status: 401 });
-  }
-
+export async function PATCH(request: NextRequest, { params }: Props) {
   const body = await request.json();
   const validation = userSchema.safeParse(body);
 
@@ -23,25 +15,39 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(validation.error.format(), { status: 400 });
   }
 
-  const duplicate = await prisma.user.findUnique({
-    where: {
-      username: body.username,
+  const user = await prisma.user.findUnique({
+    where: { id: parseInt(params.id) },
+  });
+
+  if (!user) {
+    return NextResponse.json({ error: "User Not Found" }, { status: 400 });
+  }
+
+  if (body?.password && body.password != "") {
+    const hashPassword = await bcrypt.hash(body.password, 10);
+    body.password = hashPassword;
+  } else {
+    delete body.password;
+  }
+
+  if (user.username !== body.username) {
+    const duplicateUsername = await prisma.user.findUnique({
+      where: { username: body.username },
+    });
+    if (duplicateUsername) {
+      return NextResponse.json(
+        { message: "Duplicate Username" },
+        { status: 409 }
+      );
+    }
+  }
+
+  const updateUser = await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      ...body,
     },
   });
 
-  if (duplicate) {
-    return NextResponse.json(
-      { message: "Duplicate Username" },
-      { status: 409 }
-    );
-  }
-
-  const hashPassword = await bcrypt.hash(body.password, 10);
-  body.password = hashPassword;
-
-  const newUser = await prisma.user.create({
-    data: { ...body },
-  });
-
-  return NextResponse.json(newUser, { status: 201 });
+  return NextResponse.json(updateUser);
 }
