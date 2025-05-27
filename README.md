@@ -1,3 +1,3 @@
 web学习记录
 酒店管理系统代码在the-wild-oasis中
-票务系统在ticketapp中
+票务系统代码在ticketapp中
