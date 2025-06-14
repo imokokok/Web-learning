@@ -21,6 +21,24 @@ function Filter() {
 
   const activeFilter = searchParams.get("capacity") ?? "all";
 
+  const handleFilterRef = useRef();
+
+  const handleFilter = (filter) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("capacity", filter);
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  useEffect(() => {
+    handleFilterRef.current = debounce(handleFilter, 300);
+  }, [handleFilter]);
+
+  const debouncedHandleFilter = (filter) => {
+    if (handleFilterRef.current) {
+      handleFilterRef.current(filter);
+    }  
+  };
+
   function handleFilter(filter) {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
